@@ -26,6 +26,7 @@ fn build_vendored() {
         .include(src_dir.join("zbar"))
         .define("HAVE_CONFIG_H", None)
         .define("NO_STATS", None) // Disable stats to reduce dependencies
+        .define("NDEBUG", None)   // Disable debug assertions (silences databar warnings)
         .warnings(false); // Ignore upstream warnings
 
     // Target platform settings
