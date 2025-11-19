@@ -53,10 +53,8 @@ fn main() {
             }
 
             // Generate bindings for system library
-            let mut builder = bindgen::Builder::default().header_contents(
-                "wrapper.h",
-                "#include <zbar.h>",
-            );
+            let mut builder =
+                bindgen::Builder::default().header_contents("wrapper.h", "#include <zbar.h>");
 
             for path in &lib.include_paths {
                 builder = builder.clang_arg(format!("-I{}", path.display()));

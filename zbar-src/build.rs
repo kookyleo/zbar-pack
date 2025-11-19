@@ -12,8 +12,8 @@ fn main() {
 
 fn build_vendored() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let src_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())
-        .join("vendor/zbar-0.23.93");
+    let src_dir =
+        PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap()).join("vendor/zbar-0.23.93");
 
     println!("cargo:rerun-if-changed={}", src_dir.display());
 
@@ -22,11 +22,11 @@ fn build_vendored() {
 
     // Base compilation options
     build
-        .include(&src_dir.join("include"))
-        .include(&src_dir.join("zbar"))
+        .include(src_dir.join("include"))
+        .include(src_dir.join("zbar"))
         .define("HAVE_CONFIG_H", None)
-        .define("NO_STATS", None)  // Disable stats to reduce dependencies
-        .warnings(false);  // Ignore upstream warnings
+        .define("NO_STATS", None) // Disable stats to reduce dependencies
+        .warnings(false); // Ignore upstream warnings
 
     // Target platform settings
     let target = env::var("TARGET").unwrap();
@@ -224,18 +224,66 @@ fn build_vendored() {
 
 #endif /* CONFIG_H */
 "#,
-            if target_os == "windows" { "#define _WIN32 1" } else { "" },
-            if target_os == "macos" { "#define __APPLE__ 1" } else { "" },
-            if target.contains("musl") { "#define _GNU_SOURCE 1" } else { "" },
-            if cfg!(feature = "codec-ean") || !cfg!(feature = "minimal") { "#define ENABLE_EAN 1" } else { "" },
-            if cfg!(feature = "codec-databar") || !cfg!(feature = "minimal") { "#define ENABLE_DATABAR 1" } else { "" },
-            if cfg!(feature = "codec-code128") || !cfg!(feature = "minimal") { "#define ENABLE_CODE128 1" } else { "" },
-            if cfg!(feature = "codec-code93") || !cfg!(feature = "minimal") { "#define ENABLE_CODE93 1" } else { "" },
-            if cfg!(feature = "codec-code39") || !cfg!(feature = "minimal") { "#define ENABLE_CODE39 1" } else { "" },
-            if cfg!(feature = "codec-codabar") || !cfg!(feature = "minimal") { "#define ENABLE_CODABAR 1" } else { "" },
-            if cfg!(feature = "codec-i25") || !cfg!(feature = "minimal") { "#define ENABLE_I25 1" } else { "" },
-            if cfg!(feature = "codec-qrcode") || !cfg!(feature = "minimal") { "#define ENABLE_QRCODE 1" } else { "" },
-            if cfg!(feature = "codec-sqcode") || !cfg!(feature = "minimal") { "#define ENABLE_SQCODE 1" } else { "" },
+            if target_os == "windows" {
+                "#define _WIN32 1"
+            } else {
+                ""
+            },
+            if target_os == "macos" {
+                "#define __APPLE__ 1"
+            } else {
+                ""
+            },
+            if target.contains("musl") {
+                "#define _GNU_SOURCE 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-ean") || !cfg!(feature = "minimal") {
+                "#define ENABLE_EAN 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-databar") || !cfg!(feature = "minimal") {
+                "#define ENABLE_DATABAR 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-code128") || !cfg!(feature = "minimal") {
+                "#define ENABLE_CODE128 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-code93") || !cfg!(feature = "minimal") {
+                "#define ENABLE_CODE93 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-code39") || !cfg!(feature = "minimal") {
+                "#define ENABLE_CODE39 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-codabar") || !cfg!(feature = "minimal") {
+                "#define ENABLE_CODABAR 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-i25") || !cfg!(feature = "minimal") {
+                "#define ENABLE_I25 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-qrcode") || !cfg!(feature = "minimal") {
+                "#define ENABLE_QRCODE 1"
+            } else {
+                ""
+            },
+            if cfg!(feature = "codec-sqcode") || !cfg!(feature = "minimal") {
+                "#define ENABLE_SQCODE 1"
+            } else {
+                ""
+            },
         ),
     )
     .expect("Failed to write config.h");
@@ -261,5 +309,8 @@ fn build_vendored() {
     }
 
     // Log build information
-    println!("cargo:warning=ZBar compiled successfully (target: {})", target);
+    println!(
+        "cargo:warning=ZBar compiled successfully (target: {})",
+        target
+    );
 }

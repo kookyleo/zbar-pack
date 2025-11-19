@@ -3,7 +3,6 @@
 ///
 /// Note: This is a simplified example. For real QR code generation,
 /// use a dedicated library like `qrcode` crate.
-
 use zbar_pack::{Image, ImageScanner, SymbolType};
 
 fn create_minimal_qrcode_pattern() -> (Vec<u8>, u32, u32) {
@@ -23,8 +22,8 @@ fn create_minimal_qrcode_pattern() -> (Vec<u8>, u32, u32) {
     // Top-left
     for y in 0..7 {
         for x in 0..7 {
-            let black = (x == 0 || x == 6 || y == 0 || y == 6) ||
-                        (x >= 2 && x <= 4 && y >= 2 && y <= 4);
+            let black = (x == 0 || x == 6 || y == 0 || y == 6)
+                || ((2..=4).contains(&x) && (2..=4).contains(&y));
             set_module(x, y, black);
         }
     }
@@ -32,8 +31,8 @@ fn create_minimal_qrcode_pattern() -> (Vec<u8>, u32, u32) {
     // Top-right
     for y in 0..7 {
         for x in 14..21 {
-            let black = (x == 14 || x == 20 || y == 0 || y == 6) ||
-                        (x >= 16 && x <= 18 && y >= 2 && y <= 4);
+            let black = (x == 14 || x == 20 || y == 0 || y == 6)
+                || ((16..=18).contains(&x) && (2..=4).contains(&y));
             set_module(x, y, black);
         }
     }
@@ -41,8 +40,8 @@ fn create_minimal_qrcode_pattern() -> (Vec<u8>, u32, u32) {
     // Bottom-left
     for y in 14..21 {
         for x in 0..7 {
-            let black = (x == 0 || x == 6 || y == 14 || y == 20) ||
-                        (x >= 2 && x <= 4 && y >= 16 && y <= 18);
+            let black = (x == 0 || x == 6 || y == 14 || y == 20)
+                || ((2..=4).contains(&x) && (16..=18).contains(&y));
             set_module(x, y, black);
         }
     }

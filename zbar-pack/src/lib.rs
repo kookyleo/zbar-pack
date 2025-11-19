@@ -39,7 +39,6 @@
 //! # }
 //! ```
 
-use std::ffi::{CStr, CString};
 use std::fmt;
 use std::marker::PhantomData;
 use std::os::raw::c_int;
@@ -98,7 +97,7 @@ pub enum SymbolType {
     COMPOSITE = ffi::ZBAR_COMPOSITE,
     I25 = ffi::ZBAR_I25,
     DATABAR = ffi::ZBAR_DATABAR,
-    DATABAR_EXP = ffi::ZBAR_DATABAR_EXP,
+    DatabarExp = ffi::ZBAR_DATABAR_EXP,
     CODABAR = ffi::ZBAR_CODABAR,
     CODE39 = ffi::ZBAR_CODE39,
     PDF417 = ffi::ZBAR_PDF417,
@@ -124,7 +123,8 @@ impl Image {
             }
 
             // Y800 format (grayscale): fourcc('Y', '8', '0', '0')
-            let format = ('Y' as u64) | (('8' as u64) << 8) | (('0' as u64) << 16) | (('0' as u64) << 24);
+            let format =
+                ('Y' as u64) | (('8' as u64) << 8) | (('0' as u64) << 16) | (('0' as u64) << 24);
             ffi::zbar_image_set_format(img, format);
             ffi::zbar_image_set_size(img, width, height);
             ffi::zbar_image_set_data(
@@ -240,17 +240,12 @@ impl ImageScanner {
     }
 
     /// Set configuration
-    pub fn set_config(
-        &mut self,
-        symbol_type: SymbolType,
-        config: u32,
-        value: c_int,
-    ) -> Result<()> {
+    pub fn set_config(&mut self, symbol_type: SymbolType, config: u32, value: c_int) -> Result<()> {
         unsafe {
             let ret = ffi::zbar_image_scanner_set_config(
                 self.raw.as_ptr(),
                 symbol_type as u32,
-                config as u32,
+                config,
                 value,
             );
             if ret != 0 {

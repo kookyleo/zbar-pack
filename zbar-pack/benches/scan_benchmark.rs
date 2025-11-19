@@ -1,19 +1,17 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use zbar_pack::{Image, ImageScanner, SymbolType};
 
 fn create_test_image(width: u32, height: u32) -> Vec<u8> {
     // Create a simple gradient pattern
-    (0..(width * height))
-        .map(|i| ((i % 256) as u8))
-        .collect()
+    (0..(width * height)).map(|i| (i % 256) as u8).collect()
 }
 
 fn bench_scanner_creation(c: &mut Criterion) {
     c.bench_function("scanner_creation", |b| {
         b.iter(|| {
             let scanner = ImageScanner::new().unwrap();
-            black_box(scanner);
-        });
+            black_box(scanner)
+        })
     });
 }
 
@@ -26,8 +24,8 @@ fn bench_image_creation(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, &size| {
             b.iter(|| {
                 let image = Image::from_gray(&data, size, size).unwrap();
-                black_box(image);
-            });
+                black_box(image)
+            })
         });
     }
 
@@ -45,9 +43,9 @@ fn bench_image_scanning(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, &size| {
             let image = Image::from_gray(&data, size, size).unwrap();
             b.iter(|| {
-                let symbols = scanner.scan_image(&image).unwrap();
-                black_box(symbols);
-            });
+                let count = scanner.scan_image(&image).unwrap().count();
+                black_box(count)
+            })
         });
     }
 
@@ -81,9 +79,9 @@ fn bench_full_pipeline(c: &mut Criterion) {
                 let mut scanner = ImageScanner::new().unwrap();
                 scanner.set_config(SymbolType::QRCODE, 0, 1).unwrap();
                 let image = Image::from_gray(&data, size, size).unwrap();
-                let symbols = scanner.scan_image(&image).unwrap();
-                black_box(symbols);
-            });
+                let count = scanner.scan_image(&image).unwrap().count();
+                black_box(count)
+            })
         });
     }
 

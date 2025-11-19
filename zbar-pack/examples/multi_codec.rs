@@ -1,7 +1,6 @@
 /// Example: Scan for multiple barcode types simultaneously
 ///
 /// Demonstrates configuring the scanner for multiple barcode formats.
-
 use zbar_pack::{Image, ImageScanner, SymbolType};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

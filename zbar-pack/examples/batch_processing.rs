@@ -1,12 +1,11 @@
+use std::time::Instant;
 /// Example: Batch process multiple images efficiently
 ///
 /// Demonstrates best practices for scanning multiple images:
 /// - Reuse scanner instance
 /// - Process images in parallel (optional)
 /// - Handle errors gracefully
-
 use zbar_pack::{Image, ImageScanner, SymbolType};
-use std::time::Instant;
 
 fn generate_test_image(id: usize) -> (Vec<u8>, u32, u32) {
     let size = 100u32;
@@ -57,7 +56,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\n\nProcessing complete!");
     println!("Total time: {:?}", duration);
     println!("Average per image: {:?}", duration / num_images as u32);
-    println!("Images per second: {:.2}", num_images as f64 / duration.as_secs_f64());
+    println!(
+        "Images per second: {:.2}",
+        num_images as f64 / duration.as_secs_f64()
+    );
 
     Ok(())
 }
