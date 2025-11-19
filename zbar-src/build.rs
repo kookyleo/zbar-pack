@@ -297,8 +297,13 @@ fn build_vendored() {
     println!("cargo:rustc-link-lib=static=zbar");
 
     // Export include path for downstream crates (like zbar-sys)
+    // This will be available as DEP_ZBAR_VENDORED_INCLUDE
     println!(
         "cargo:include={}",
+        src_dir.join("include").display()
+    );
+    println!(
+        "cargo:INCLUDE={}",
         src_dir.join("include").display()
     );
 

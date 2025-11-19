@@ -11,6 +11,7 @@ documentation = "https://docs.rs/zbar-src"
 description = "Bundled ZBar C library source code for static linking"
 readme = "../README.md"
 build = "build.rs"
+links = "zbar-vendored"
 exclude = [
     "target/",
     ".git/",

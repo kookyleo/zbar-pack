@@ -90,10 +90,16 @@ fn main() {
 
 #[cfg(feature = "vendored")]
 fn find_zbar_header() -> PathBuf {
-    // Try to find zbar-src in various locations
-    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+    // 1. Try DEP_ZBAR_VENDORED_INCLUDE from zbar-src
+    if let Ok(include_dir) = env::var("DEP_ZBAR_VENDORED_INCLUDE") {
+        let header = PathBuf::from(include_dir).join("zbar.h");
+        if header.exists() {
+            return header;
+        }
+    }
 
-    // 1. Try workspace (development)
+    // 2. Try workspace (development)
+    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let workspace_path = manifest_dir
         .parent()
         .unwrap()
@@ -102,37 +108,9 @@ fn find_zbar_header() -> PathBuf {
         return workspace_path;
     }
 
-    // 2. Try to find in target directory (cargo package)
-    // When building a packaged crate, dependencies are extracted to target/package/
-    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-
-    // Navigate from OUT_DIR up to find zbar-src in package directory
-    for ancestor in out_dir.ancestors() {
-        // Check package directory
-        if let Some(parent) = ancestor.parent() {
-            let package_dir = parent.join("package");
-            if package_dir.exists() {
-                // Look for zbar-src-* directories
-                if let Ok(entries) = std::fs::read_dir(&package_dir) {
-                    for entry in entries.flatten() {
-                        let path = entry.path();
-                        if path.is_dir()
-                            && path
-                                .file_name()
-                                .and_then(|n| n.to_str())
-                                .map(|n| n.starts_with("zbar-src-"))
-                                .unwrap_or(false)
-                        {
-                            let header = path.join("vendor/zbar-0.23.93/include/zbar.h");
-                            if header.exists() {
-                                return header;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    panic!("Unable to find zbar.h header file. Looked in workspace and package directories.");
+    panic!(
+        "Unable to find zbar.h header file. \
+        DEP_ZBAR_VENDORED_INCLUDE={:?}",
+        env::var("DEP_ZBAR_VENDORED_INCLUDE")
+    );
 }
