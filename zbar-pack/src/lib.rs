@@ -300,6 +300,28 @@ pub fn version() -> (u32, u32) {
     }
 }
 
+/// Set global library debug/verbosity level
+///
+/// Controls the amount of debug output from ZBar library.
+///
+/// # Arguments
+///
+/// * `verbosity` - Debug level (0 = silent, higher values = more output)
+///
+/// # Example
+///
+/// ```
+/// use zbar_pack::set_verbosity;
+///
+/// // Disable all debug output
+/// set_verbosity(0);
+/// ```
+pub fn set_verbosity(verbosity: i32) {
+    unsafe {
+        ffi::zbar_set_verbosity(verbosity);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

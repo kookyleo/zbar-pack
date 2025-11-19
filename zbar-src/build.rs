@@ -298,14 +298,8 @@ fn build_vendored() {
 
     // Export include path for downstream crates (like zbar-sys)
     // This will be available as DEP_ZBAR_VENDORED_INCLUDE
-    println!(
-        "cargo:include={}",
-        src_dir.join("include").display()
-    );
-    println!(
-        "cargo:INCLUDE={}",
-        src_dir.join("include").display()
-    );
+    println!("cargo:include={}", src_dir.join("include").display());
+    println!("cargo:INCLUDE={}", src_dir.join("include").display());
 
     // Add system dependencies based on platform
     if target_os == "linux" {

@@ -810,7 +810,7 @@ checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "zbar-pack"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "criterion",
  "zbar-sys",
@@ -818,7 +818,7 @@ dependencies = [
 
 [[package]]
 name = "zbar-src"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "cc",
  "pkg-config",
@@ -826,7 +826,7 @@ dependencies = [
 
 [[package]]
 name = "zbar-sys"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "bindgen",
  "pkg-config",
