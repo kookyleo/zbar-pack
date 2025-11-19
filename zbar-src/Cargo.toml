@@ -6,8 +6,28 @@ license.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
+homepage = "https://github.com/kookyleo/zbar-pack"
+documentation = "https://docs.rs/zbar-src"
 description = "Bundled ZBar C library source code for static linking"
+readme = "../README.md"
 build = "build.rs"
+exclude = [
+    "target/",
+    ".git/",
+    "vendor/zbar-*/doc/",
+    "vendor/zbar-*/examples/",
+    "vendor/zbar-*/test/",
+    "vendor/zbar-*/android/",
+    "vendor/zbar-*/iphone/",
+    "vendor/zbar-*/java/",
+    "vendor/zbar-*/perl/",
+    "vendor/zbar-*/python/",
+    "vendor/zbar-*/pygtk/",
+    "vendor/zbar-*/qt/",
+    "vendor/zbar-*/gtk/",
+    "vendor/zbar-*/plugin/",
+    "vendor/zbar-*/.git*",
+]
 
 [features]
 default = ["vendored"]

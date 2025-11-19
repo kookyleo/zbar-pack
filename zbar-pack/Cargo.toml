@@ -6,9 +6,17 @@ license.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
+homepage = "https://github.com/kookyleo/zbar-pack"
+documentation = "https://docs.rs/zbar-pack"
 description = "Safe Rust bindings for ZBar barcode scanner with vendored static linking"
+readme = "../README.md"
 categories = ["multimedia", "computer-vision"]
 keywords = ["zbar", "barcode", "qrcode", "scanner", "image"]
+exclude = [
+    "target/",
+    ".git/",
+    ".github/",
+]
 
 [features]
 default = ["vendored", "all-codecs"]
@@ -34,4 +42,8 @@ all-codecs = ["zbar-sys/all-codecs"]
 zbar-sys.workspace = true
 
 [dev-dependencies]
-# Test dependencies
+criterion = "0.5"
+
+[[bench]]
+name = "scan_benchmark"
+harness = false

@@ -6,8 +6,15 @@ license.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
+homepage = "https://github.com/kookyleo/zbar-pack"
+documentation = "https://docs.rs/zbar-sys"
 description = "Low-level FFI bindings for ZBar barcode scanner library"
+readme = "../README.md"
 links = "zbar"
+exclude = [
+    "target/",
+    ".git/",
+]
 
 [features]
 default = ["vendored"]
