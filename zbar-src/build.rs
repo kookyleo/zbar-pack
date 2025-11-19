@@ -296,6 +296,12 @@ fn build_vendored() {
     // Output link information
     println!("cargo:rustc-link-lib=static=zbar");
 
+    // Export include path for downstream crates (like zbar-sys)
+    println!(
+        "cargo:include={}",
+        src_dir.join("include").display()
+    );
+
     // Add system dependencies based on platform
     if target_os == "linux" {
         println!("cargo:rustc-link-lib=m");

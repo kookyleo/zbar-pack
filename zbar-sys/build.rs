@@ -10,16 +10,25 @@ fn main() {
     // vendored mode: use zbar-src compiled static library
     #[cfg(feature = "vendored")]
     {
-        let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
-        let zbar_src_dir = manifest_dir
-            .parent()
-            .unwrap()
-            .join("zbar-src/vendor/zbar-0.23.93");
+        // Try to find zbar.h from zbar-src dependency
+        let zbar_header = if let Ok(dep_include) = env::var("DEP_ZBAR_INCLUDE") {
+            // When built as dependency, zbar-src exports include path
+            PathBuf::from(dep_include).join("zbar.h")
+        } else {
+            // Development build (workspace)
+            let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+            manifest_dir
+                .parent()
+                .unwrap()
+                .join("zbar-src/vendor/zbar-0.23.93/include/zbar.h")
+        };
+
+        let include_dir = zbar_header.parent().unwrap();
 
         // Generate bindings using bindgen
         let bindings = bindgen::Builder::default()
-            .header(zbar_src_dir.join("include/zbar.h").to_string_lossy())
-            .clang_arg(format!("-I{}", zbar_src_dir.join("include").display()))
+            .header(zbar_header.to_string_lossy())
+            .clang_arg(format!("-I{}", include_dir.display()))
             .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
             .allowlist_function("zbar_.*")
             .allowlist_type("zbar_.*")
