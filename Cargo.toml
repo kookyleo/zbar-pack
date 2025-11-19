@@ -7,7 +7,7 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "0.1.1"
+version = "0.1.2"
 authors = ["kookyleo <kookyleo@gmail.com>"]
 license = "LGPL-2.1-or-later"
 edition = "2021"
@@ -21,8 +21,8 @@ pkg-config = "0.3"
 bindgen = "0.69"
 
 # zbar crates
-zbar-src = { version = "0.1.1", path = "zbar-src" }
-zbar-sys = { version = "0.1.1", path = "zbar-sys" }
+zbar-src = { version = "0.1.2", path = "zbar-src" }
+zbar-sys = { version = "0.1.2", path = "zbar-sys" }
 
 [profile.release]
 lto = true
