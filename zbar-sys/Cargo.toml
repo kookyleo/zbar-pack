@@ -1,0 +1,37 @@
+[package]
+name = "zbar-sys"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+description = "Low-level FFI bindings for ZBar barcode scanner library"
+links = "zbar"
+
+[features]
+default = ["vendored"]
+vendored = ["zbar-src/vendored"]
+system = []
+dynamic = ["system"]
+
+# Forward codec features to zbar-src
+codec-ean = ["zbar-src/codec-ean"]
+codec-databar = ["zbar-src/codec-databar"]
+codec-code128 = ["zbar-src/codec-code128"]
+codec-code93 = ["zbar-src/codec-code93"]
+codec-code39 = ["zbar-src/codec-code39"]
+codec-codabar = ["zbar-src/codec-codabar"]
+codec-i25 = ["zbar-src/codec-i25"]
+codec-qrcode = ["zbar-src/codec-qrcode"]
+codec-sqcode = ["zbar-src/codec-sqcode"]
+
+minimal = ["zbar-src/minimal"]
+all-codecs = ["zbar-src/all-codecs"]
+
+[dependencies]
+zbar-src = { workspace = true, optional = true }
+
+[build-dependencies]
+pkg-config.workspace = true
+bindgen.workspace = true

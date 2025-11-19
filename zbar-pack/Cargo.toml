@@ -1,0 +1,37 @@
+[package]
+name = "zbar-pack"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+description = "Safe Rust bindings for ZBar barcode scanner with vendored static linking"
+categories = ["multimedia", "computer-vision"]
+keywords = ["zbar", "barcode", "qrcode", "scanner", "image"]
+
+[features]
+default = ["vendored", "all-codecs"]
+vendored = ["zbar-sys/vendored"]
+system = ["zbar-sys/system"]
+dynamic = ["zbar-sys/dynamic"]
+
+# Codec features
+codec-ean = ["zbar-sys/codec-ean"]
+codec-databar = ["zbar-sys/codec-databar"]
+codec-code128 = ["zbar-sys/codec-code128"]
+codec-code93 = ["zbar-sys/codec-code93"]
+codec-code39 = ["zbar-sys/codec-code39"]
+codec-codabar = ["zbar-sys/codec-codabar"]
+codec-i25 = ["zbar-sys/codec-i25"]
+codec-qrcode = ["zbar-sys/codec-qrcode"]
+codec-sqcode = ["zbar-sys/codec-sqcode"]
+
+minimal = ["zbar-sys/minimal"]
+all-codecs = ["zbar-sys/all-codecs"]
+
+[dependencies]
+zbar-sys.workspace = true
+
+[dev-dependencies]
+# Test dependencies

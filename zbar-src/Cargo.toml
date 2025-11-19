@@ -1,0 +1,43 @@
+[package]
+name = "zbar-src"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+description = "Bundled ZBar C library source code for static linking"
+build = "build.rs"
+
+[features]
+default = ["vendored"]
+vendored = []
+
+# Codec feature flags - for reducing binary size
+codec-ean = []
+codec-databar = []
+codec-code128 = []
+codec-code93 = []
+codec-code39 = []
+codec-codabar = []
+codec-i25 = []
+codec-qrcode = []
+codec-sqcode = []
+
+# Default common codecs enabled
+minimal = []
+all-codecs = [
+    "codec-ean",
+    "codec-databar",
+    "codec-code128",
+    "codec-code93",
+    "codec-code39",
+    "codec-codabar",
+    "codec-i25",
+    "codec-qrcode",
+    "codec-sqcode",
+]
+
+[build-dependencies]
+cc.workspace = true
+pkg-config.workspace = true

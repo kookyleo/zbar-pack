@@ -1,0 +1,30 @@
+[workspace]
+members = [
+    "zbar-src",
+    "zbar-sys",
+    "zbar-pack",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+authors = ["kookyleo <kookyleo@gmail.com>"]
+license = "LGPL-2.1-or-later"
+edition = "2021"
+rust-version = "1.70"
+repository = "https://github.com/kookyleo/zbar-pack"
+
+[workspace.dependencies]
+# Build dependencies
+cc = "1.0"
+pkg-config = "0.3"
+bindgen = "0.69"
+
+# zbar crates
+zbar-src = { version = "0.1.0", path = "zbar-src" }
+zbar-sys = { version = "0.1.0", path = "zbar-sys" }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
